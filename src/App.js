@@ -2,21 +2,15 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import './css/index.css';
 import apiKey from './config';
-import Navigation from './components/Navigation';
+import Header from './components/Header';
 import PhotoContainer from './components/PhotoContainer';
 import NotFound from './components/NotFound';
 
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      pics: [],
-      loading: false
-    };
-  }
-  defaultSearch = 'dogs';
-  fetchData = () => {
+  state = {loading:false, search: ''};
+  defaultSearch = 'spiders';
+  fetchData = (search) => {
     const base = "https://api.flickr.com/services/rest/";
     const url_params = `method=flickr.photos.search&api_key=${apiKey}&tags=${search}&per_page=24&format=json&nojsoncallback=1`;
     const search_url = `${base}?${url_params}`;
@@ -40,7 +34,7 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <div className="container">
-            <Navigation/>
+            <Header/>
             <Switch>
               <Route exact path="/" render={() => <Redirect to={`/search/${this.defaultSearch}`}/>}/>
               <Route path="/search/:topic" render={() => <PhotoContainer state={this.state} fetchData={this.fetchData}/>}/>

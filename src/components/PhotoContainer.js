@@ -1,27 +1,40 @@
-import React from 'react';
-import Photos from './Photos';
+import React, {Component} from 'react';
+import { withRouter } from "react-router";
+import Loading from "./Loading";
+import NotFound from "./NotFound";
+import Photos from "./Photos";
 
-const PhotoContainer = (props) => {
-    const results = props.data;
-    let pics = results.map(pic =>
-        <Photos url={`https://farm${pic.farm}.staticflicker.com/${pic.server}/${pic.id}_${pic.secret}.jpg`} id={pic.id} key={pic.id} title={pic.title}/>
-    );
-    let numberOfPics = pics.length;
-
-    return (
-      <div className="photo-container">
-          {(numberOfPics === 0) ?
-            <li className="not-found">
-                <h3>No Results Found</h3>
-                <p>Your search did not come up with any results, please try again.</p>
-            </li> :
-              <h2>{`Showing ${numberOfPics} results for ${props.searchText}`}</h2>}
-              <ul>
-                  {pics}
-              </ul>
-          }
-      </div>
-    )
+class PhotoContainer extends Component {
+    render() {
+        const {loading, search, items} = this.props.state;
+        const url_topic = this.props.match.params.topic;
+        let body;
+        if(url_topic !== search) {
+            if(loading) {
+                body = <Loading/>
+            } else {
+                this.props.fetchData(url_topic);
+            }
+        } else {
+            if(items.length === 0) {
+                body = <NotFound search={search}/>
+            } else {
+                body = (
+                    <div>
+                        <h2>Your results for {search}</h2>
+                        <ul>
+                            {items.map((item) => <Photos src={item.src} key={item.id}/>)}
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        return (
+            <div className="photo-container">
+                {body}
+            </div>
+        );
+    }
 }
 
-export default PhotoContainer;
+export default withRouter(PhotoContainer);

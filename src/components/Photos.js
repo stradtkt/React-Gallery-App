@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-const Photos = props => {
+const Photos = ({src,id}) => {
     return (
         <li>
-            <img title={props.title} src={props.url} key={props.id} alt="Flicker Photos"/>
+            <img src={src} key={id} alt="Flicker Photos"/>
         </li>
     );
-};
+}
 
 export default Photos;
