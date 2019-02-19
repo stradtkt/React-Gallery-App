@@ -2,7 +2,7 @@ import React from 'react';
 import ReactLoading from 'react-loading';
 
 const Loading = ({ type, color }) => (
-    <ReactLoading type={this.bubbles} color={this.blue} height="700" width="400"/>
+    <ReactLoading type={'bubbles'} color={'blue'} height={'700px'} width={'400px'}/>
 );
 
 export default Loading;

@@ -3,10 +3,11 @@ import Photos from './Photos';
 
 const PhotoContainer = (props) => {
     const results = props.data;
-    let pics = results.map(pic => {
-        <Photos url={`https://farm${pic.farm}.staticflicker.com/${pic.server}/${pic.id}_${pic.secret}.jpg`} id={pic.id} key={pic.id} title={pic.title}/>);
-    }
+    let pics = results.map(pic =>
+        <Photos url={`https://farm${pic.farm}.staticflicker.com/${pic.server}/${pic.id}_${pic.secret}.jpg`} id={pic.id} key={pic.id} title={pic.title}/>
+    );
     let numberOfPics = pics.length;
+
     return (
       <div className="photo-container">
           {(numberOfPics === 0) ?
@@ -21,6 +22,6 @@ const PhotoContainer = (props) => {
           }
       </div>
     )
-};
+}
 
 export default PhotoContainer;
