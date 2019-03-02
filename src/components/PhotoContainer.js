@@ -9,10 +9,14 @@ class PhotoContainer extends Component {
         const {loading, search, items} = this.props.state;
         const url_topic = this.props.match.params.topic;
         let body;
+        // if the url_topic does not equal search
         if(url_topic !== search) {
+            // if the condition is set to loading
             if(loading) {
+                //the body will show the loader
                 body = <Loading/>
             } else {
+                //fetch the data from the url_topic that is passed in
                 this.props.fetchData(url_topic);
             }
         } else {
@@ -23,6 +27,7 @@ class PhotoContainer extends Component {
                     <div>
                         <h2>Your results for {search}</h2>
                         <ul>
+                            {/*Loop through all the items in the search and display them*/}
                             {items.map((item) => <Photos src={item.src} key={item.id}/>)}
                         </ul>
                     </div>
@@ -31,6 +36,7 @@ class PhotoContainer extends Component {
         }
         return (
             <div className="photo-container">
+                {/*Show all the items in the body*/}
                 {body}
             </div>
         );
